@@ -1,0 +1,16 @@
+{
+  "name": "javascript-algorithms-exercises",
+  "version": "1.0.0",
+  "description": "Algorithms exercises",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@andrescabana86",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.2.1"
+  }
+}
