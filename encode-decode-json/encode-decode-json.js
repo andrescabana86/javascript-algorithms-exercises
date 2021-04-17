@@ -109,6 +109,7 @@ function encode(json, prefix) {
 
 function decode(paths, position) {
   if (position && typeof paths === 'string') {
+    // create {} object
     const divider = paths.search(/(?:\w)(\/)/)
     if (divider > -1) {
       const path = paths.substring(0, paths.indexOf('/'))
@@ -120,6 +121,7 @@ function decode(paths, position) {
       return
     }
 
+    // create [] array
     const array = paths.search(/^\w+\[[0-9]]/)
     if (array > -1) {
       const path = paths.substring(0, paths.indexOf('['))
@@ -131,6 +133,7 @@ function decode(paths, position) {
       return
     }
 
+    // create [...{}] object array
     const objArray = paths.search(/(?:])+(\/)/)
     if (objArray > -1) {
       let path = paths.substring(0, paths.indexOf('/'))
@@ -145,6 +148,7 @@ function decode(paths, position) {
       return
     }
 
+    // create { key: value } pair
     const value = paths.search(/=/)
     if (value > -1) {
       let [prop, value] = paths.split('=')
@@ -156,6 +160,7 @@ function decode(paths, position) {
     }
   }
 
+  // first iteration over the [...values]
   return paths.reduce((partial, path) => {
     decode(path, partial)
     return partial
