@@ -12,6 +12,8 @@ const example = {
   formed: 2016,
   secretBase: 'Super tower',
   active: true,
+  capabilities: { kill: false, capture: true, save: true },
+  membersCode: [1, 2, 3],
   members: [
     {
       name: 'Molecule Man',
@@ -30,6 +32,23 @@ const example = {
       age: 1000000,
       secretIdentity: 'Unknown',
       powers: ['Immortality', 'Heat Immunity', 'Inferno', 'Teleportation', 'Interdimensional travel'],
+    },
+  ],
+}
+
+const example2 = {
+  members: [
+    {
+      name: 'Molecule Man',
+      age: 29,
+      secretIdentity: 'Dan Jukes',
+      powers: ['Radiation resistance', 'Turning tiny', 'Radiation blast'],
+    },
+    {
+      name: 'Madame Uppercut',
+      age: 39,
+      secretIdentity: 'Jane Wilson',
+      powers: ['Million tonne punch', 'Damage resistance', 'Superhuman reflexes'],
     },
   ],
 }
@@ -58,4 +77,87 @@ function getNodeType(value) {
   if (Array.isArray(value)) return 'array'
   if (typeof value === 'object') return 'object'
   else return 'primitive'
+}
+
+function encode(json, prefix) {
+  let result = ''
+  switch (getNodeType(json)) {
+    case 'object':
+      Object.keys(json).map((key) => {
+        result += encode(json[key], `${prefix ? `${prefix}/` : ''}${key}`)
+      })
+      break
+    case 'array':
+      json.map((value, idx) => {
+        result += encode(value, `${prefix ? `${prefix}[${idx}]` : ''}`)
+      })
+      break
+    default:
+      const value = typeof json === 'string' ? `"${json}"` : json
+      result += `${prefix && isNaN(prefix) ? prefix : ''}=${value}`
+      result += ','
+      break
+  }
+
+  if (prefix === undefined) {
+    // final result where prefix is undefined
+    return result.slice(0, -1).split(',')
+  }
+
+  return result
+}
+
+function decode(paths, position) {
+  if (position && typeof paths === 'string') {
+    const divider = paths.search(/(?:\w)+(\/)/)
+    if (divider > -1) {
+      const path = paths.substring(0, divider)
+      const subpath = paths.substring(divider + 1)
+      if (!position[path]) {
+        position[path] = {}
+      }
+      decode(subpath, position[path])
+      return
+    }
+
+    const array = paths.search(/^\w+\[[0-9]\]/)
+    if (array > -1) {
+      const path = paths.substring(0, paths.search(/\[[0-9]\]/))
+      const subpath = paths.substring(paths.search(/\[[0-9]\]/))
+      if (!position[path]) {
+        position[path] = []
+      }
+      decode(subpath, position[path])
+      return
+    }
+
+    const objArray = paths.search(/(?:\])+(\/)/)
+    if (objArray > -1) {
+      let path = paths.substring(0, paths.search(/\//))
+      const subpath = paths.substring(paths.search(/\//) + 1)
+      if (path.includes('[')) {
+        path = path.replace(/[\[\]]/g, '')
+      }
+      if (!position[path]) {
+        position[path] = {}
+      }
+      decode(subpath, position[path])
+      return
+    }
+
+    const value = paths.search(/=/)
+    if (value > -1) {
+      let [prop, value] = paths.split('=')
+      if (prop.includes('[')) {
+        prop = prop.replace(/[\[\]]/g, '')
+      }
+      position[prop] = JSON.parse(value)
+      return
+    }
+  }
+
+  return paths.reduce((partial, path) => {
+    decode(path, partial)
+    return partial
+  }, {})
 }
