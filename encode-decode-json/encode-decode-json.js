@@ -131,7 +131,7 @@ function decode(paths, position) {
       return
     }
 
-    const objArray = paths.search(/(?:\])+(\/)/)
+    const objArray = paths.search(/(?:])+(\/)/)
     if (objArray > -1) {
       let path = paths.substring(0, paths.indexOf('/'))
       const subpath = paths.substring(paths.indexOf('/') + 1)
@@ -161,8 +161,3 @@ function decode(paths, position) {
     return partial
   }, {})
 }
-
-const encoded = encode(example)
-console.log('encoded', encoded)
-const decoded = decode(encoded)
-console.log('decoded', JSON.stringify(decoded, null, 2))
