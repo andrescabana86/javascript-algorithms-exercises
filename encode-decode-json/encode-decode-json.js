@@ -109,10 +109,10 @@ function encode(json, prefix) {
 
 function decode(paths, position) {
   if (position && typeof paths === 'string') {
-    const divider = paths.search(/(?:\w)+(\/)/)
+    const divider = paths.search(/(?:\w)(\/)/)
     if (divider > -1) {
-      const path = paths.substring(0, divider)
-      const subpath = paths.substring(divider + 1)
+      const path = paths.substring(0, paths.indexOf('/'))
+      const subpath = paths.substring(paths.indexOf('/') + 1)
       if (!position[path]) {
         position[path] = {}
       }
@@ -120,10 +120,10 @@ function decode(paths, position) {
       return
     }
 
-    const array = paths.search(/^\w+\[[0-9]\]/)
+    const array = paths.search(/^\w+\[[0-9]]/)
     if (array > -1) {
-      const path = paths.substring(0, paths.search(/\[[0-9]\]/))
-      const subpath = paths.substring(paths.search(/\[[0-9]\]/))
+      const path = paths.substring(0, paths.indexOf('['))
+      const subpath = paths.substring(paths.indexOf('['))
       if (!position[path]) {
         position[path] = []
       }
@@ -133,8 +133,8 @@ function decode(paths, position) {
 
     const objArray = paths.search(/(?:\])+(\/)/)
     if (objArray > -1) {
-      let path = paths.substring(0, paths.search(/\//))
-      const subpath = paths.substring(paths.search(/\//) + 1)
+      let path = paths.substring(0, paths.indexOf('/'))
+      const subpath = paths.substring(paths.indexOf('/') + 1)
       if (path.includes('[')) {
         path = path.replace(/[\[\]]/g, '')
       }
@@ -161,3 +161,8 @@ function decode(paths, position) {
     return partial
   }, {})
 }
+
+const encoded = encode(example)
+console.log('encoded', encoded)
+const decoded = decode(encoded)
+console.log('decoded', JSON.stringify(decoded, null, 2))
