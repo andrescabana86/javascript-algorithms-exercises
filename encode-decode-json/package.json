@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "encode-decode-json",
+  "version": "1.0.0",
+  "description": "Encode & Decode JSON challenge",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "@andrescabana86",
+  "license": "MIT"
+}
