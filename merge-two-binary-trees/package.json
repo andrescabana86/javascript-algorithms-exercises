@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "merge-two-binary-trees",
+  "version": "1.0.0",
+  "description": "Merge Two Binary Trees challenge",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "@andrescabana86",
+  "license": "MIT"
+}
