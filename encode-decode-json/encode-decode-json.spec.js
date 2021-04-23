@@ -10,7 +10,7 @@ import {
   objAndArrCombinedExampleEncoded,
 } from './mock-data'
 
-describe('Encode JSON function', () => {
+describe('Encode JSON', () => {
   it('should encode an object example properly', () => {
     const encoded = encode(objExample)
     expect(encoded).toEqual(objExampleEncoded)
@@ -32,7 +32,7 @@ describe('Encode JSON function', () => {
   })
 })
 
-describe('Decode JSON function', () => {
+describe('Decode JSON', () => {
   it('should decode an object example properly', () => {
     const encoded = decode(objExampleEncoded)
     expect(encoded).toEqual(objExample)
