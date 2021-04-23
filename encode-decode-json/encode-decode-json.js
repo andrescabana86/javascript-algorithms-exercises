@@ -1,11 +1,3 @@
-/**
- * Define an encoding format that can represent a JSON data structure as an array of single-line strings.
- * Each JSON value primitive (e.g. number, string, boolean, null) should correspond to its own string entry
- * in the output array. Other than those requirements, your encoding scheme can be anything you want.
- * Create an `encode` function that takes JSON data input and outputs an array of strings in your encoding format.
- * Create a `decode` function that takes the string array and transforms it back into the original JSON data structure.
- */
-
 export function encode(json, prefix) {
   let result = ''
   switch (getNodeType(json)) {
