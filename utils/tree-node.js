@@ -8,7 +8,7 @@
  */
 
 /**
- * @param {TreeNode} val
+ * @param {(number|TreeNode)} val
  * @param {TreeNode} left
  * @param {TreeNode} right
  * @return {TreeNode}
