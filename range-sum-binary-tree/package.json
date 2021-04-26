@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "range-sum-binary-tree",
+  "version": "1.0.0",
+  "description": "Range Sum Binary Tree",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "@andrescabana86",
+  "license": "MIT"
+}
