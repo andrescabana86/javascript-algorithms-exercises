@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "shortest-character-distance",
+  "version": "1.0.0",
+  "description": "Shortest Character Distance",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "@andrescabana86",
+  "license": "MIT"
+}

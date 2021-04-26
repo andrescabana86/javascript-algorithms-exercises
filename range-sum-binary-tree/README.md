@@ -1,4 +1,4 @@
-# Merge Two Binary Trees
+# Range Sum Binary Tree
 
 ## Problem
 * Given the root node of a binary search tree
